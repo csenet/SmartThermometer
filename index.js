@@ -6,7 +6,7 @@ const { Readline } = SerialPort.parsers;
 const fs = require('fs');
 
 //シリアルポートは適宜変更してください
-const port = new SerialPort('/dev/cu.usbserial-1120', { baudRate: 115200 });
+const port = new SerialPort('/dev/cu.usbserial-120', { baudRate: 115200 });
 const parser = port.pipe(new Readline({ delimiter: '\n' }));
 
 function sound(path) {
@@ -27,11 +27,11 @@ parser.on('data', data => {
       sound("wait.mp3");
       break;
     default:
-      console.log(data + "℃");
+      console.log(data + "C");
       sound("ok.mp3");
       const now = new Date();
       const timeStamp = now.toFormat('DDD MMM DD YYYY HH24:MI:SS');
-      fs.appendFile('data.csv', timeStamp + "," + data + "℃\n", (err) => {
+      fs.appendFile('data.csv', timeStamp + "," + data + "C\n", (err) => {
         if (err) throw err;
         console.log('data.csvに追記されました');
       });
